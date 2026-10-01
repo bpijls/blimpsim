@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/app:/app/app      # hot reload; anything outside app/ needs a rebuild
+    # ports:
+    #   - "${HOST_PORT:-8000}:8000"
+    networks: [default, caddy_proxy]
+    labels:
+      caddy: ${API_DOMAIN}
+      caddy.reverse_proxy: "{{upstreams 8000}}"
+      caddy_docker_network: ${CADDY_NETWORK}
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on: [api]
+    volumes:
+      - ./frontend/src:/app/src
+    networks: [default, caddy_proxy]
+    labels:
+      caddy: ${APP_DOMAIN}
+      caddy.reverse_proxy: "{{upstreams 3000}}"
+      caddy_docker_network: ${CADDY_NETWORK}
+
+volumes:
+  postgres_data:
+
+networks:
+  caddy_proxy:
+    external: true
+    name: ${CADDY_NETWORK}
