@@ -8,11 +8,13 @@ class Settings(BaseSettings):
 
     database_url: str = "sqlite+aiosqlite:///:memory:"
 
-    # Required — no default, so a missing key fails at startup, not mid-request.
-    vonk_key: str
-    vonk_base_url: str = "http://vonk:4000/v1"
-    vonk_model: str = "code"
-    vonk_embed_model: str = "embedding"
+    # The sim gateway runs on the GPU host, next to the Godot simulator.
+    sim_gateway_url: str = "http://vonk:8100"
+    # Required — no default, so a missing secret fails at startup, not mid-request.
+    sim_secret: str
+
+    # Which blimp the api steers: "sim" (the digital twin) or "real" (the hardware).
+    blimp_driver: str = "sim"
 
     cors_origins: str = "*"
 

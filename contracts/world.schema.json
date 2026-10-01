@@ -1,0 +1,403 @@
+{
+  "$defs": {
+    "Crowd": {
+      "properties": {
+        "count": {
+          "minimum": 0,
+          "title": "Count",
+          "type": "integer"
+        },
+        "stand": {
+          "minimum": 0,
+          "title": "Stand",
+          "type": "number"
+        },
+        "transit": {
+          "minimum": 0,
+          "title": "Transit",
+          "type": "number"
+        },
+        "wander": {
+          "minimum": 0,
+          "title": "Wander",
+          "type": "number"
+        }
+      },
+      "required": [
+        "count",
+        "wander",
+        "transit",
+        "stand"
+      ],
+      "title": "Crowd",
+      "type": "object"
+    },
+    "Hall": {
+      "properties": {
+        "depth": {
+          "description": "Extent along Z",
+          "exclusiveMinimum": 0,
+          "title": "Depth",
+          "type": "number"
+        },
+        "height": {
+          "description": "Floor to ceiling",
+          "exclusiveMinimum": 0,
+          "title": "Height",
+          "type": "number"
+        },
+        "width": {
+          "description": "Extent along X",
+          "exclusiveMinimum": 0,
+          "title": "Width",
+          "type": "number"
+        }
+      },
+      "required": [
+        "width",
+        "depth",
+        "height"
+      ],
+      "title": "Hall",
+      "type": "object"
+    },
+    "Light": {
+      "properties": {
+        "energy": {
+          "exclusiveMinimum": 0,
+          "title": "Energy",
+          "type": "number"
+        },
+        "position": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        }
+      },
+      "required": [
+        "position",
+        "energy"
+      ],
+      "title": "Light",
+      "type": "object"
+    },
+    "Look": {
+      "description": "Surface and light colours, varied per seed so a detector does not learn one hall.",
+      "properties": {
+        "floor": {
+          "default": [
+            0.55,
+            0.55,
+            0.58
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Floor",
+          "type": "array"
+        },
+        "light": {
+          "default": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Light",
+          "type": "array"
+        },
+        "walls": {
+          "default": [
+            0.82,
+            0.8,
+            0.76
+          ],
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Walls",
+          "type": "array"
+        }
+      },
+      "title": "Look",
+      "type": "object"
+    },
+    "Obstacle": {
+      "properties": {
+        "depth": {
+          "exclusiveMinimum": 0,
+          "title": "Depth",
+          "type": "number"
+        },
+        "height": {
+          "exclusiveMinimum": 0,
+          "title": "Height",
+          "type": "number"
+        },
+        "kind": {
+          "enum": [
+            "kiosk",
+            "bench",
+            "planter"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "width": {
+          "exclusiveMinimum": 0,
+          "title": "Width",
+          "type": "number"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "yaw": {
+          "default": 0.0,
+          "title": "Yaw",
+          "type": "number"
+        },
+        "z": {
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "required": [
+        "kind",
+        "x",
+        "z",
+        "width",
+        "depth",
+        "height"
+      ],
+      "title": "Obstacle",
+      "type": "object"
+    },
+    "Pillar": {
+      "properties": {
+        "size": {
+          "description": "Side of the square cross-section",
+          "exclusiveMinimum": 0,
+          "title": "Size",
+          "type": "number"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "z": {
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "z",
+        "size"
+      ],
+      "title": "Pillar",
+      "type": "object"
+    },
+    "Pose": {
+      "properties": {
+        "position": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "yaw": {
+          "default": 0.0,
+          "title": "Yaw",
+          "type": "number"
+        }
+      },
+      "required": [
+        "position"
+      ],
+      "title": "Pose",
+      "type": "object"
+    },
+    "Zone": {
+      "description": "Where people appear (entrance) or linger (attraction).",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "entrance",
+            "attraction"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "radius": {
+          "exclusiveMinimum": 0,
+          "title": "Radius",
+          "type": "number"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "z": {
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "x",
+        "z",
+        "radius"
+      ],
+      "title": "Zone",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "ambient": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Ambient",
+      "type": "number"
+    },
+    "blimp_start": {
+      "$ref": "#/$defs/Pose"
+    },
+    "crowd": {
+      "$ref": "#/$defs/Crowd"
+    },
+    "hall": {
+      "$ref": "#/$defs/Hall"
+    },
+    "lights": {
+      "items": {
+        "$ref": "#/$defs/Light"
+      },
+      "title": "Lights",
+      "type": "array"
+    },
+    "look": {
+      "$ref": "#/$defs/Look",
+      "default": {
+        "floor": [
+          0.55,
+          0.55,
+          0.58
+        ],
+        "light": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "walls": [
+          0.82,
+          0.8,
+          0.76
+        ]
+      }
+    },
+    "obstacles": {
+      "items": {
+        "$ref": "#/$defs/Obstacle"
+      },
+      "title": "Obstacles",
+      "type": "array"
+    },
+    "pillars": {
+      "items": {
+        "$ref": "#/$defs/Pillar"
+      },
+      "title": "Pillars",
+      "type": "array"
+    },
+    "seed": {
+      "title": "Seed",
+      "type": "integer"
+    },
+    "version": {
+      "default": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "zones": {
+      "items": {
+        "$ref": "#/$defs/Zone"
+      },
+      "title": "Zones",
+      "type": "array"
+    }
+  },
+  "required": [
+    "seed",
+    "hall",
+    "pillars",
+    "obstacles",
+    "zones",
+    "lights",
+    "ambient",
+    "crowd",
+    "blimp_start"
+  ],
+  "title": "World",
+  "type": "object"
+}

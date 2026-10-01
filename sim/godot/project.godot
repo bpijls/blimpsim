@@ -1,0 +1,30 @@
+config_version=5
+
+[application]
+
+config/name="blimpsim"
+run/main_scene="res://main.tscn"
+
+[display]
+
+; The window is never looked at: the onboard camera renders into a SubViewport.
+window/size/viewport_width=64
+window/size/viewport_height=64
+window/vsync/vsync_mode=0
+
+[navigation]
+
+; Repeatability: by default the navigation map is rebuilt on a background thread
+; and becomes available at an unpredictable tick, which makes the crowd differ
+; between otherwise identical episodes.
+world/map_use_async_iterations=false
+avoidance/thread_model/avoidance_use_multiple_threads=false
+avoidance/thread_model/avoidance_use_high_priority_threads=false
+
+[physics]
+
+common/physics_ticks_per_second=60
+
+[rendering]
+
+renderer/rendering_method="forward_plus"

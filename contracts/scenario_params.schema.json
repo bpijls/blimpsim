@@ -1,0 +1,86 @@
+{
+  "description": "Inputs to world generation. Same params + seed always give the same world.",
+  "properties": {
+    "attractions": {
+      "default": 3,
+      "maximum": 16,
+      "minimum": 0,
+      "title": "Attractions",
+      "type": "integer"
+    },
+    "depth": {
+      "default": 40.0,
+      "maximum": 300,
+      "minimum": 10,
+      "title": "Depth",
+      "type": "number"
+    },
+    "entrances": {
+      "default": 4,
+      "maximum": 16,
+      "minimum": 1,
+      "title": "Entrances",
+      "type": "integer"
+    },
+    "height": {
+      "default": 12.0,
+      "maximum": 40,
+      "minimum": 3,
+      "title": "Height",
+      "type": "number"
+    },
+    "obstacles": {
+      "default": 12,
+      "maximum": 200,
+      "minimum": 0,
+      "title": "Obstacles",
+      "type": "integer"
+    },
+    "people": {
+      "default": 40,
+      "maximum": 500,
+      "minimum": 0,
+      "title": "People",
+      "type": "integer"
+    },
+    "pillar_spacing": {
+      "default": 12.0,
+      "description": "0 disables pillars",
+      "minimum": 0,
+      "title": "Pillar Spacing",
+      "type": "number"
+    },
+    "seed": {
+      "default": 0,
+      "title": "Seed",
+      "type": "integer"
+    },
+    "stand": {
+      "default": 0.2,
+      "minimum": 0,
+      "title": "Stand",
+      "type": "number"
+    },
+    "transit": {
+      "default": 0.4,
+      "minimum": 0,
+      "title": "Transit",
+      "type": "number"
+    },
+    "wander": {
+      "default": 0.4,
+      "minimum": 0,
+      "title": "Wander",
+      "type": "number"
+    },
+    "width": {
+      "default": 60.0,
+      "maximum": 300,
+      "minimum": 10,
+      "title": "Width",
+      "type": "number"
+    }
+  },
+  "title": "ScenarioParams",
+  "type": "object"
+}

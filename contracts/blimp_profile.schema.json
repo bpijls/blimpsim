@@ -1,0 +1,200 @@
+{
+  "$defs": {
+    "CameraProfile": {
+      "properties": {
+        "fov_y_deg": {
+          "default": 60.0,
+          "exclusiveMaximum": 180,
+          "exclusiveMinimum": 0,
+          "title": "Fov Y Deg",
+          "type": "number"
+        },
+        "fps": {
+          "default": 15.0,
+          "exclusiveMinimum": 0,
+          "title": "Fps",
+          "type": "number"
+        },
+        "height": {
+          "default": 480,
+          "exclusiveMinimum": 0,
+          "title": "Height",
+          "type": "integer"
+        },
+        "mount": {
+          "default": [
+            0.0,
+            -0.35,
+            -0.3
+          ],
+          "description": "Offset from the blimp's centre",
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Mount",
+          "type": "array"
+        },
+        "tilt_deg": {
+          "default": 35.0,
+          "description": "Default tilt below the horizon",
+          "maximum": 90,
+          "minimum": 0,
+          "title": "Tilt Deg",
+          "type": "number"
+        },
+        "width": {
+          "default": 640,
+          "exclusiveMinimum": 0,
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "title": "CameraProfile",
+      "type": "object"
+    }
+  },
+  "description": "Airframe parameters. Placeholders until fitted to the real blimp's step responses.",
+  "properties": {
+    "actuator_lag": {
+      "default": 0.3,
+      "description": "First-order thrust lag, s",
+      "minimum": 0,
+      "title": "Actuator Lag",
+      "type": "number"
+    },
+    "added_mass": {
+      "default": 0.5,
+      "description": "Fraction of mass added by displaced air",
+      "minimum": 0,
+      "title": "Added Mass",
+      "type": "number"
+    },
+    "buoyancy_trim": {
+      "default": 0.0,
+      "description": "Net lift in N; 0 is neutrally buoyant",
+      "title": "Buoyancy Trim",
+      "type": "number"
+    },
+    "camera": {
+      "$ref": "#/$defs/CameraProfile",
+      "default": {
+        "fov_y_deg": 60.0,
+        "fps": 15.0,
+        "height": 480,
+        "mount": [
+          0.0,
+          -0.35,
+          -0.3
+        ],
+        "tilt_deg": 35.0,
+        "width": 640
+      }
+    },
+    "command_latency": {
+      "default": 0.1,
+      "description": "Radio delay, s",
+      "minimum": 0,
+      "title": "Command Latency",
+      "type": "number"
+    },
+    "diameter": {
+      "default": 0.7,
+      "exclusiveMinimum": 0,
+      "title": "Diameter",
+      "type": "number"
+    },
+    "drag_heave": {
+      "default": 0.5,
+      "exclusiveMinimum": 0,
+      "title": "Drag Heave",
+      "type": "number"
+    },
+    "drag_surge": {
+      "default": 0.12,
+      "description": "Quadratic drag, N/(m/s)^2",
+      "exclusiveMinimum": 0,
+      "title": "Drag Surge",
+      "type": "number"
+    },
+    "drag_sway": {
+      "default": 0.6,
+      "exclusiveMinimum": 0,
+      "title": "Drag Sway",
+      "type": "number"
+    },
+    "length": {
+      "default": 1.6,
+      "exclusiveMinimum": 0,
+      "title": "Length",
+      "type": "number"
+    },
+    "linear_damping": {
+      "default": 0.02,
+      "description": "N/(m/s); brings it to rest",
+      "minimum": 0,
+      "title": "Linear Damping",
+      "type": "number"
+    },
+    "mass": {
+      "default": 0.35,
+      "description": "kg, including the lifting gas",
+      "exclusiveMinimum": 0,
+      "title": "Mass",
+      "type": "number"
+    },
+    "max_heave_thrust": {
+      "default": 0.08,
+      "description": "N",
+      "exclusiveMinimum": 0,
+      "title": "Max Heave Thrust",
+      "type": "number"
+    },
+    "max_surge_thrust": {
+      "default": 0.12,
+      "description": "N",
+      "exclusiveMinimum": 0,
+      "title": "Max Surge Thrust",
+      "type": "number"
+    },
+    "max_yaw_torque": {
+      "default": 0.03,
+      "description": "N\u00b7m",
+      "exclusiveMinimum": 0,
+      "title": "Max Yaw Torque",
+      "type": "number"
+    },
+    "yaw_damping": {
+      "default": 0.005,
+      "description": "N\u00b7m/(rad/s)",
+      "minimum": 0,
+      "title": "Yaw Damping",
+      "type": "number"
+    },
+    "yaw_drag": {
+      "default": 0.05,
+      "description": "N\u00b7m/(rad/s)^2",
+      "exclusiveMinimum": 0,
+      "title": "Yaw Drag",
+      "type": "number"
+    },
+    "yaw_inertia": {
+      "default": 0.08,
+      "description": "kg\u00b7m^2",
+      "exclusiveMinimum": 0,
+      "title": "Yaw Inertia",
+      "type": "number"
+    }
+  },
+  "title": "BlimpProfile",
+  "type": "object"
+}

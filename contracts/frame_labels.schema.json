@@ -1,0 +1,139 @@
+{
+  "$defs": {
+    "CameraPose": {
+      "properties": {
+        "fov_y_deg": {
+          "title": "Fov Y Deg",
+          "type": "number"
+        },
+        "height": {
+          "title": "Height",
+          "type": "integer"
+        },
+        "position": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "rotation": {
+          "description": "Quaternion x, y, z, w",
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Rotation",
+          "type": "array"
+        },
+        "width": {
+          "title": "Width",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "fov_y_deg",
+        "position",
+        "rotation"
+      ],
+      "title": "CameraPose",
+      "type": "object"
+    },
+    "PersonLabel": {
+      "properties": {
+        "bbox": {
+          "description": "x, y, width, height in pixels",
+          "maxItems": 4,
+          "minItems": 4,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Bbox",
+          "type": "array"
+        },
+        "id": {
+          "description": "Stable across frames: the track id",
+          "title": "Id",
+          "type": "integer"
+        },
+        "visibility": {
+          "description": "Fraction of the body not occluded",
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Visibility",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "bbox",
+        "visibility"
+      ],
+      "title": "PersonLabel",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "camera": {
+      "$ref": "#/$defs/CameraPose"
+    },
+    "frame": {
+      "title": "Frame",
+      "type": "integer"
+    },
+    "people": {
+      "items": {
+        "$ref": "#/$defs/PersonLabel"
+      },
+      "title": "People",
+      "type": "array"
+    },
+    "t": {
+      "title": "T",
+      "type": "number"
+    }
+  },
+  "required": [
+    "frame",
+    "t",
+    "camera",
+    "people"
+  ],
+  "title": "FrameLabels",
+  "type": "object"
+}

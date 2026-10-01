@@ -8,7 +8,7 @@ cd "$SCRIPT_DIR"
 if [ ! -f .env ]; then
   cp .env.example .env
   echo "Created .env from .env.example — fill it in before continuing:"
-  echo "  VONK_KEY     (required; the app will not start without it)"
+  echo "  SIM_SECRET   (required; the app will not start without it)"
   echo "  DB_PASSWORD  (and the matching password inside DATABASE_URL)"
   echo "  APP_DOMAIN / API_DOMAIN / CADDY_NETWORK"
   exit 1
@@ -16,7 +16,7 @@ fi
 
 # Fail early and legibly rather than halfway through a container start.
 missing=()
-for var in VONK_KEY DB_PASSWORD APP_DOMAIN CADDY_NETWORK; do
+for var in SIM_SECRET DB_PASSWORD APP_DOMAIN CADDY_NETWORK; do
   value="$(grep -E "^${var}=" .env | cut -d= -f2- || true)"
   [ -z "$value" ] && missing+=("$var")
 done

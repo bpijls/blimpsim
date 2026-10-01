@@ -1,0 +1,46 @@
+{
+  "description": "Hardware-agnostic steering command. The real blimp's API adapts to this.",
+  "properties": {
+    "camera_tilt": {
+      "anyOf": [
+        {
+          "maximum": 90,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Degrees below the horizon; null leaves it unchanged",
+      "title": "Camera Tilt"
+    },
+    "heave": {
+      "default": 0.0,
+      "description": "Vertical thrust, positive up",
+      "ge": -1.0,
+      "le": 1.0,
+      "title": "Heave",
+      "type": "number"
+    },
+    "surge": {
+      "default": 0.0,
+      "description": "Forward thrust, -1 (reverse) to 1",
+      "ge": -1.0,
+      "le": 1.0,
+      "title": "Surge",
+      "type": "number"
+    },
+    "yaw": {
+      "default": 0.0,
+      "description": "Turn rate demand, positive turns left",
+      "ge": -1.0,
+      "le": 1.0,
+      "title": "Yaw",
+      "type": "number"
+    }
+  },
+  "title": "BlimpCommand",
+  "type": "object"
+}

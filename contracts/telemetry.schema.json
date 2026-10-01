@@ -1,0 +1,131 @@
+{
+  "$defs": {
+    "BlimpState": {
+      "properties": {
+        "battery": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Battery"
+        },
+        "camera_tilt": {
+          "description": "Degrees below the horizon",
+          "title": "Camera Tilt",
+          "type": "number"
+        },
+        "position": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Position",
+          "type": "array"
+        },
+        "velocity": {
+          "maxItems": 3,
+          "minItems": 3,
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "title": "Velocity",
+          "type": "array"
+        },
+        "yaw": {
+          "title": "Yaw",
+          "type": "number"
+        },
+        "yaw_rate": {
+          "title": "Yaw Rate",
+          "type": "number"
+        }
+      },
+      "required": [
+        "position",
+        "yaw",
+        "velocity",
+        "yaw_rate",
+        "camera_tilt"
+      ],
+      "title": "BlimpState",
+      "type": "object"
+    },
+    "PersonState": {
+      "description": "Ground truth; only the simulator can provide it.",
+      "properties": {
+        "heading": {
+          "title": "Heading",
+          "type": "number"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "x": {
+          "title": "X",
+          "type": "number"
+        },
+        "z": {
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "x",
+        "z",
+        "heading"
+      ],
+      "title": "PersonState",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "blimp": {
+      "$ref": "#/$defs/BlimpState"
+    },
+    "people": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PersonState"
+      },
+      "title": "People",
+      "type": "array"
+    },
+    "t": {
+      "description": "Seconds since the run started",
+      "title": "T",
+      "type": "number"
+    }
+  },
+  "required": [
+    "t",
+    "blimp"
+  ],
+  "title": "Telemetry",
+  "type": "object"
+}

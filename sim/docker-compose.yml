@@ -1,0 +1,35 @@
+# Runs on the GPU host, not on the machine that serves the api and frontend.
+# Deploy with ./deploy.sh from the development machine.
+# Pinned so the datasets volume (blimpsim-sim_datasets) survives moving or
+# renaming the directory this file is deployed to.
+name: blimpsim-sim
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+    env_file: .env
+    # Published on purpose: the api reaches the gateway from another host.
+    # Every endpoint except /healthz requires SIM_SECRET.
+    ports:
+      - "${GATEWAY_BIND_ADDR}:${GATEWAY_PORT}:8100"
+    volumes:
+      - datasets:/datasets
+    restart: unless-stopped
+
+  sim:
+    build:
+      context: ./godot
+    env_file: .env
+    environment:
+      GATEWAY_WS_URL: ws://gateway:8100/sim
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+    runtime: nvidia
+    depends_on:
+      gateway:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  datasets:

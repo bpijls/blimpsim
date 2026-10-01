@@ -7,7 +7,12 @@ export default defineConfig({
   server: {
     host: "0.0.0.0",
     port: 3000,
-    proxy: { "/api": { target: "http://api:8000", changeOrigin: true } },
+    // Vite rejects requests for hostnames it does not know; Caddy forwards APP_DOMAIN.
+    allowedHosts: [process.env.APP_DOMAIN].filter(Boolean),
+    // ws: the telemetry stream is a WebSocket under /api.
+    proxy: { "/api": { target: "http://api:8000", changeOrigin: true, ws: true } },
   },
+  // Two pages: the monitor and the stand-alone remote control.
+  build: { rollupOptions: { input: ["index.html", "remote.html"] } },
   test: { environment: "jsdom", globals: true },
 });

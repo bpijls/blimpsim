@@ -1,6 +1,11 @@
 [tool.ruff]
 line-length = 100
 
+[tool.ruff.lint]
+# Pinned explicitly: ruff's default rule set has changed between releases.
+select = ["E", "F", "I"]
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+pythonpath = ["."]
