@@ -34,6 +34,14 @@ docker compose down
 
 `backend/app/` and `frontend/src/` are volume-mounted with hot reload. Anything outside them (`requirements.txt`, `package.json`, `vite.config.js`, Dockerfiles) needs a rebuild.
 
+Public server (feib.nl, `~/blimpsim`, served at `https://blimpsim.feib.nl`):
+
+```bash
+ssh feib.nl 'cd blimpsim && git pull && docker compose up -d --build'
+```
+
+Its `.env` sets `COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml`, so plain `docker compose` there applies the production overrides: the frontend is a static build behind nginx (`frontend/Dockerfile.prod`, `nginx/default.conf`), nothing is volume-mounted or hot-reloaded, and the api has no hostname of its own (it is reached through the frontend's `/api` proxy). Every change needs a pull and a rebuild. Containers there cannot resolve `vonk`, so `SIM_GATEWAY_URL` uses vonk's Tailscale address. It steers the same simulator as the development stack but has its own database.
+
 Simulator, on vonk:
 
 ```bash
@@ -175,4 +183,6 @@ client/blimpsim_client/
 - **Datasets live in a Docker volume on vonk** (`blimpsim-sim_datasets`); the api only proxies them. `docker compose down -v` there deletes them.
 - **The frontend dev server only answers for `APP_DOMAIN`** (`allowedHosts` in `vite.config.js`); the frontend container reads it from `.env`.
 - **Schema is created with `create_all` on startup.** Adding a column to an existing table needs a migration or a dropped volume.
+- **The api has no authentication.** Anyone who can reach it can steer the blimp, load worlds and record datasets onto vonk's disk. That includes everyone on the internet for the feib.nl deployment.
+- **One simulator, several front ends.** The development stack and feib.nl both load worlds into the same simulator; a run started from one replaces the other's, and the other's monitor then draws a hall that no longer matches.
 - **`RealDriver` is a stub.** Setting `BLIMP_DRIVER=real` makes every blimp endpoint return 503 until it is implemented.

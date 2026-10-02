@@ -1,0 +1,26 @@
+# Overrides for a public server: a static frontend behind nginx, no hot reload,
+# no source mounts, and the api reachable only through the frontend's /api proxy.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+#
+# or set COMPOSE_FILE=docker-compose.yml:docker-compose.prod.yml in .env and use
+# plain `docker compose`.
+services:
+  postgres:
+    restart: unless-stopped
+
+  api:
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes: !reset []
+    # No hostname of its own: API_DOMAIN is not published here.
+    labels: !reset []
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.prod
+    volumes: !reset []
+    labels:
+      caddy.reverse_proxy: "{{upstreams 80}}"
+    restart: unless-stopped

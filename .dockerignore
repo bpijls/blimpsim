@@ -1,0 +1,11 @@
+# Only the production frontend image builds from the repository root.
+.git
+.env
+.venv
+**/node_modules
+**/dist
+**/__pycache__
+backend
+client
+sim
+docs
